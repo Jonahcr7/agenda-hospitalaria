@@ -37,6 +37,7 @@ public class Medico {
     @Enumerated(EnumType.STRING)
     @Column(name = "especialidad", nullable = false, length = 50)
     private Especialidad especialidad;
+
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cita> citas = new ArrayList<>();
 

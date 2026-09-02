@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "Cita")
+@Entity
 @Table(name = "cita")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,7 +28,7 @@ public class Cita {
     @Column(name = "estado", nullable = false, length = 20)
     private Estado estado;
 
-    @Column(name = "motivo_consulta", nullable = false, length = 100)
+    @Column(name = "motivo_consulta", nullable = false, length = 255)
     private String motivoConsulta;
 
     @ManyToOne(fetch = FetchType.LAZY)
