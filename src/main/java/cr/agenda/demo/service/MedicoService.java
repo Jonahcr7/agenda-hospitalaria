@@ -46,6 +46,7 @@ public class MedicoService implements IMedicoService {
         return new MedicoResponse(medico);
     }
 
+    @Transactional
     @Override
     public void eliminarMedico(Long id) {
         Boolean medicoExiste =  medicoRepository.existsById(id);

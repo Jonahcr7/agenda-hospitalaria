@@ -1,7 +1,10 @@
 package cr.agenda.demo.model;
 
+import cr.agenda.demo.dto.paciente.CreatePacienteRequest;
+import cr.agenda.demo.dto.paciente.UpdatePacienteRequest;
 import cr.agenda.demo.model.enums.Especialidad;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,4 +46,20 @@ public class Paciente {
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cita> citas = new ArrayList<>();
+
+    public Paciente (CreatePacienteRequest request) {
+        this.nombre = request.nombre();
+        this.apellido = request.apellido();
+        this.email = request.email();
+        this.telefono = request.telefono();
+        this.fechaNacimiento = request.fechaNacimiento();
+        this.documentoIdentidad = request.documentoIdentidad();
+    }
+
+    public void actualizarPaciente(@Valid UpdatePacienteRequest request) {
+        this.nombre = request.nombre();
+        this.apellido = request.apellido();
+        this.email = request.email();
+        this.telefono = request.telefono();
+    }
 }
