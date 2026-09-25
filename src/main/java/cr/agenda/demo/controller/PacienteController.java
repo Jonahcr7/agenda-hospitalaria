@@ -62,6 +62,7 @@ public class PacienteController {
     @DeleteMapping("paciente/{id}")
     public ResponseEntity<Map<String, Boolean>> eliminarPaciente(@PathVariable Long id){
         logger.info("Eliminando paciente por id: {}", id);
+        pacienteService.eliminarPaciente(id);
         Map<String, Boolean> response = new HashMap<>();
         response.put("Paciente eliminado", Boolean.TRUE);
         return ResponseEntity.noContent().build();

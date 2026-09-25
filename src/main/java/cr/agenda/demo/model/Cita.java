@@ -1,7 +1,10 @@
 package cr.agenda.demo.model;
 
+import cr.agenda.demo.dto.cita.CreateCitaRequest;
+import cr.agenda.demo.dto.cita.UpdateCitaRequest;
 import cr.agenda.demo.model.enums.Estado;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,4 +41,18 @@ public class Cita {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_paciente", nullable = false)
     private Paciente paciente;
+
+    public Cita (CreateCitaRequest request, Medico medico, Paciente paciente) {
+        this.fechaHora = LocalDateTime.now();
+        this.estado = request.estado();
+        this.motivoConsulta = request.motivoConsulta();
+        this.medico = medico;
+        this.paciente = paciente;
+    }
+
+    public void actualizarCita(UpdateCitaRequest request, Medico medico) {
+        this.estado = request.estado();
+        this.motivoConsulta = request.motivoConsulta();
+        this.medico = medico;
+    }
 }
