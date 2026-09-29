@@ -30,7 +30,7 @@ public class CitaController {
     }
 
     @GetMapping("/cita/{id}")
-    public ResponseEntity buscarCitaById(@PathVariable Long id) {
+    public ResponseEntity<CitaResponse> buscarCitaById(@PathVariable Long id) {
         CitaResponse cita = citaService.buscarCitaById(id);
         return new ResponseEntity<>(cita, HttpStatus.OK);
     }

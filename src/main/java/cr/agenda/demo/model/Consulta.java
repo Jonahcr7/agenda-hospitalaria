@@ -1,5 +1,8 @@
 package cr.agenda.demo.model;
 
+import cr.agenda.demo.dto.cita.CreateCitaRequest;
+import cr.agenda.demo.dto.consulta.CreateConsultaRequest;
+import cr.agenda.demo.dto.consulta.UpdateConsultaRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,4 +41,20 @@ public class Consulta {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cita", nullable = false, unique = true)
     private Cita cita;
+
+    public Consulta(CreateConsultaRequest request, Cita cita) {
+        this.fechaHoraDeAtencion = request.fechaHoraDeAtencion();
+        this.sintomas = request.sintomas();
+        this.diagnostico = request.diagnostico();
+        this.tratamiento = request.tratamiento();
+        this.observaciones = request.observaciones();
+        this.cita = cita;
+    }
+
+    public void actualizarConsulta(UpdateConsultaRequest request) {
+        this.sintomas = request.sintomas();
+        this.diagnostico = request.diagnostico();
+        this.tratamiento = request.tratamiento();
+        this.observaciones = request.observaciones();
+    }
 }
