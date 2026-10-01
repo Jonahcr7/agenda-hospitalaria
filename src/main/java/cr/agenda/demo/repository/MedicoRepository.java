@@ -1,5 +1,6 @@
 package cr.agenda.demo.repository;
 
+import cr.agenda.demo.dto.medico.MedicoResponse;
 import cr.agenda.demo.model.Medico;
 import cr.agenda.demo.model.enums.Especialidad;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,11 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
     Optional<Medico> findByCedula(String cedula);
 
+    Optional<Medico> findByIdAndActivoTrue(Long id);
+
     boolean existsByCedula(String cedula);
 
     List<Medico> findByEspecialidad(Especialidad especialidad);
+
+    List<Medico> findByActivo(boolean activo);
 }

@@ -44,6 +44,9 @@ public class Paciente {
     @Column(name = "documento_identidad", nullable = false, unique = true, length = 50)
     private String documentoIdentidad;
 
+    @Column(name = "activo",  nullable = false)
+    private  boolean activo = true;
+
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cita> citas = new ArrayList<>();
 

@@ -24,6 +24,16 @@ public class MedicoService implements IMedicoService {
     }
 
     @Override
+    public List<MedicoResponse> listarMedicosActivos() {
+        return medicoRepository.findByActivo(true).stream().map(MedicoResponse::new).toList();
+    }
+
+    @Override
+    public List<MedicoResponse> listarMedicosInactivos() {
+        return medicoRepository.findByActivo(false).stream().map(MedicoResponse::new).toList();
+    }
+
+    @Override
     public MedicoResponse buscarMedicoPorId(Long id) {
         Medico medico = medicoRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Medico no encontrado"));
         return new MedicoResponse(medico);
@@ -49,9 +59,8 @@ public class MedicoService implements IMedicoService {
     @Transactional
     @Override
     public void eliminarMedico(Long id) {
-        Boolean medicoExiste =  medicoRepository.existsById(id);
-        if (!medicoExiste)
-            throw new RecursoNoEncontradoException("Medico no encontrado");
-        medicoRepository.deleteById(id);
+        Medico medico =  medicoRepository.findById(id).
+                orElseThrow(() -> new RecursoNoEncontradoException("Medico no encontrado"));
+        medico.setActivo(false);
     }
 }

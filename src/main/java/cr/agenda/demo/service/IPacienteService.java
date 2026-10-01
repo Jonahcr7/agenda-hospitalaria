@@ -10,6 +10,10 @@ public interface IPacienteService {
 
     public List<PacienteResponse> listarPacientes();
 
+    public List<PacienteResponse> listarPacientesActivos();
+
+    public List<PacienteResponse> listarPacientesInactivos();
+
     public PacienteResponse buscarPacientePorId(Long id);
 
     public PacienteResponse crearPaciente(CreatePacienteRequest request);

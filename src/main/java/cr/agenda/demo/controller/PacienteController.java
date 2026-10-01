@@ -34,6 +34,20 @@ public class PacienteController {
         return ResponseEntity.ok(pacientes);
     }
 
+    @GetMapping("pacientes/activos")
+    public ResponseEntity<List<PacienteResponse>> listarPacientesActivos(){
+        List<PacienteResponse> pacientes = pacienteService.listarPacientesActivos();
+        logger.info("Pacientes listado: {}", pacientes);
+        return ResponseEntity.ok(pacientes);
+    }
+
+    @GetMapping("pacientes/inactivos")
+    public ResponseEntity<List<PacienteResponse>> listarPacientesInactivos(){
+        List<PacienteResponse> pacientes = pacienteService.listarPacientesInactivos();
+        logger.info("Pacientes listado: {}", pacientes);
+        return ResponseEntity.ok(pacientes);
+    }
+
     @PostMapping("/paciente")
     public ResponseEntity<PacienteResponse> crearPaciente(@RequestBody @Valid CreatePacienteRequest request, UriComponentsBuilder uriBuilder) {
         logger.info("Solicitud para crear un paciente: {}", request);

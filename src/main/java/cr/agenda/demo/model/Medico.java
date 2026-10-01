@@ -40,6 +40,9 @@ public class Medico {
     @Column(name = "especialidad", nullable = false, length = 50)
     private Especialidad especialidad;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cita> citas = new ArrayList<>();
 

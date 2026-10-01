@@ -32,6 +32,18 @@ public class MedicoController {
         return new ResponseEntity<>(medicos, HttpStatus.OK);
     }
 
+    @GetMapping("/medicos/activos")
+    public ResponseEntity<List<MedicoResponse>> listarMedicosActivos() {
+        List<MedicoResponse> medicos = medicoService.listarMedicosActivos();
+        return new ResponseEntity<>(medicos, HttpStatus.OK);
+    }
+
+    @GetMapping("/medicos/inactivos")
+    public ResponseEntity<List<MedicoResponse>> listarMedicosInactivos() {
+        List<MedicoResponse> medicos = medicoService.listarMedicosInactivos();
+        return new ResponseEntity<>(medicos, HttpStatus.OK);
+    }
+
     @GetMapping("/medico/{id}")
     public ResponseEntity<MedicoResponse> buscarMedicoPorId(@PathVariable Long id) {
         MedicoResponse medico = medicoService.buscarMedicoPorId(id);

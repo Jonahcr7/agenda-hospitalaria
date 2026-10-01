@@ -24,6 +24,16 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
+    public List<PacienteResponse> listarPacientesActivos() {
+        return pacienteRepository.findByActivo(true).stream().map(PacienteResponse::new).toList();
+    }
+
+    @Override
+    public List<PacienteResponse> listarPacientesInactivos() {
+        return pacienteRepository.findByActivo(false).stream().map(PacienteResponse::new).toList();
+    }
+
+    @Override
     public PacienteResponse buscarPacientePorId(Long id) {
         Paciente paciente = pacienteRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Paciente no encontrado"));
         return new PacienteResponse(paciente);
@@ -48,9 +58,8 @@ public class PacienteService implements IPacienteService {
     @Transactional
     @Override
     public void eliminarPaciente(Long id) {
-        Boolean existe = pacienteRepository.existsById(id);
-        if (!existe)
-            throw new RecursoNoEncontradoException("Paciente no encontrado");
-        pacienteRepository.deleteById(id);
+        Paciente paciente = pacienteRepository.findById(id).
+                orElseThrow(() -> new RecursoNoEncontradoException("Paciente no encontrado"));
+        paciente.setActivo(false);
     }
 }
