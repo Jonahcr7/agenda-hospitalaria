@@ -14,7 +14,7 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
     Optional<Medico> findByIdAndActivoTrue(Long id);
 
-    boolean existsByCedula(String cedula);
+    boolean existsByIdAndActivoTrue(Long id);
 
     List<Medico> findByEspecialidad(Especialidad especialidad);
 

@@ -44,10 +44,10 @@ public class CitaService implements  ICitaService {
     @Transactional
     @Override
     public CitaResponse crearCita(CreateCitaRequest request) {
-        if (!medicoRepository.existsById(request.idMedico()))
-            throw new RecursoNoEncontradoException("Medico no encontrado");
-        if (!pacienteRepository.existsById(request.idPaciente()))
-            throw new RecursoNoEncontradoException("Paciente no encontrado");
+        if (!medicoRepository.existsByIdAndActivoTrue(request.idMedico()))
+            throw new RecursoNoEncontradoException("Medico no encontrado/activo");
+        if (!pacienteRepository.existsByIdAndActivoTrue(request.idPaciente()))
+            throw new RecursoNoEncontradoException("Paciente no encontrado/activo");
         Medico medico = medicoRepository.getReferenceById(request.idMedico());
         Paciente paciente = pacienteRepository.getReferenceById(request.idPaciente());
         Cita cita = new Cita(request,  medico, paciente);
@@ -59,8 +59,8 @@ public class CitaService implements  ICitaService {
     @Override
     public CitaResponse actualizarCita(Long id, UpdateCitaRequest request) {
         Cita cita = citaRepository.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("Cita no encontrada"));
-        if (!medicoRepository.existsById(request.idMedico()))
-            throw new RecursoNoEncontradoException("Medico no encontrado");
+        if (!medicoRepository.existsByIdAndActivoTrue(request.idMedico()))
+            throw new RecursoNoEncontradoException("Medico no encontrado/activo");
         Medico medico = medicoRepository.getReferenceById(request.idMedico());
         cita.actualizarCita(request, medico);
         return new CitaResponse(cita);

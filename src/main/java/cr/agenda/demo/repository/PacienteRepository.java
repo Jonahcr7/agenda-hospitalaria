@@ -8,11 +8,9 @@ import java.util.Optional;
 
 public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
-    Optional<Paciente> findByDocumentoIdentidad(String documentoIdentidad);
-
     Optional<Paciente> findByIdAndActivoTrue(Long id);
 
-    boolean existsByDocumentoIdentidad(String documentoIdentidad);
+    boolean existsByIdAndActivoTrue(Long id);
 
     List<Paciente> findByActivo(boolean activo);
 

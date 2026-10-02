@@ -9,6 +9,8 @@ import cr.agenda.demo.model.Consulta;
 import cr.agenda.demo.model.enums.Estado;
 import cr.agenda.demo.repository.CitaRepository;
 import cr.agenda.demo.repository.ConsultaRepository;
+import cr.agenda.demo.repository.MedicoRepository;
+import cr.agenda.demo.repository.PacienteRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class ConsultaService implements IConsultaService {
 
     private final ConsultaRepository consultaRepository;
     private final CitaRepository citaRepository;
+    private final MedicoRepository medicoRepository;
+    private final PacienteRepository  pacienteRepository;
 
     @Override
     public List<ConsultaResponse> mostrarConsultas() {
@@ -38,6 +42,10 @@ public class ConsultaService implements IConsultaService {
     public ConsultaResponse crearConsulta(CreateConsultaRequest request) {
         Cita cita = citaRepository.findById(request.idCita()).
                 orElseThrow(() -> new RecursoNoEncontradoException("Cita no encontrada"));
+        if (!medicoRepository.existsByIdAndActivoTrue(cita.getMedico().getId()))
+            throw new RecursoNoEncontradoException("Medico no encontrado/activo");
+        if (!pacienteRepository.existsByIdAndActivoTrue(cita.getPaciente().getId()))
+            throw new RecursoNoEncontradoException("Paciente no encontrado/activo");
         cita.setEstado(Estado.COMPLETADA);
         Consulta consulta = new Consulta(request,  cita);
         consultaRepository.save(consulta);
